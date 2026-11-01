@@ -6,6 +6,7 @@ import { MadrasatiAd } from "./MadrasatiAd";
 import { MadrasatiCinematicAd } from "./MadrasatiCinematicAd";
 import { MadrasatiWorldFilm } from "./MadrasatiWorldFilm";
 import { MadrasatiGlobalFilm } from "./MadrasatiGlobalFilm";
+import { RealisticSchool3D } from "./RealisticSchool3D";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -39,6 +40,15 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{ titleText: "Welcome to Remotion", titleColor: "#000000" }}
+      />
+
+      <Composition
+        id="MadrasatiSchool3DTest"
+        component={RealisticSchool3D}
+        durationInFrames={240}
+        fps={30}
+        width={1080}
+        height={1920}
       />
 
       <Composition
