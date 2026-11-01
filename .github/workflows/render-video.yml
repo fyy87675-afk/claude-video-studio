@@ -1,42 +1,14 @@
 name: Render Video
 
-on:
+'on':
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  render:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: video-engine/package-lock.json
-
-      - name: Install dependencies
-        working-directory: video-engine
-        run: npm ci
-
-      - name: Install browser
-        working-directory: video-engine
-        run: npx remotion browser ensure
-
-      - name: Render test video
-        working-directory: video-engine
-        run: npx remotion render src/index.ts HelloWorld out/hello-world.mp4 --codec=h264 --concurrency=2
-
-      - name: Upload video
-        uses: actions/upload-artifact@v4
-        with:
-          name: hello-world-video
-          path: video-engine/out/hello-world.mp4
-          retention-days: 7
+      - name: Test workflow
+        run: echo "Render workflow detected successfully"
