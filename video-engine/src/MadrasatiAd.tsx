@@ -1,6 +1,8 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Img,
+  staticFile,
   interpolate,
   spring,
   useCurrentFrame,
@@ -70,30 +72,22 @@ const Brand = () => (
     style={{
       display: "flex",
       alignItems: "center",
-      gap: 18,
+      gap: 22,
       direction: "rtl",
     }}
   >
-    <div
+    <Img
+      src={staticFile("madrasati-logo.png")}
       style={{
-        width: 76,
-        height: 76,
-        borderRadius: 24,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: `linear-gradient(135deg, ${C.cyan}, ${C.blue})`,
-        color: C.bg,
-        fontSize: 46,
-        fontWeight: 900,
-        boxShadow: "0 0 45px #36D9F255",
+        width: 125,
+        height: 125,
+        objectFit: "contain",
+        filter: "drop-shadow(0 12px 28px #3987FF66)",
       }}
-    >
-      م
-    </div>
+    />
     <div>
-      <Text size={39} weight={900}>مدرستي</Text>
-      <Text size={17} color={C.muted}>إدارة مدرسية ذكية</Text>
+      <Text size={43} weight={900}>مدرستي</Text>
+      <Text size={19} color={C.gold}>إدارة مدرسية ذكية</Text>
     </div>
   </div>
 );
