@@ -352,10 +352,148 @@ const Management = ({ frame, fps }: { frame: number; fps: number }) => (
   </Scene>
 );
 
+
+const BusTracking = ({ frame, fps }: { frame: number; fps: number }) => {
+  const busX = interpolate(frame, [0, 220], [12, 70], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const pulse = 0.65 + Math.sin(frame / 8) * 0.2;
+
+  return (
+    <Scene frame={frame} fps={fps}>
+      <Header
+        eyebrow="03 — تتبّع الباص المباشر"
+        title="طريقهم أمام عينيك"
+        subtitle="تابع موقع الباص على الخريطة أثناء الرحلة"
+      />
+
+      <Glass style={{ padding: 20, overflow: "hidden" }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          direction: "rtl",
+          marginBottom: 18,
+        }}>
+          <Text size={25} weight={900}>خريطة الرحلة</Text>
+          <div style={{
+            background: "#48D6A022",
+            border: "1px solid #48D6A077",
+            borderRadius: 30,
+            padding: "8px 15px",
+          }}>
+            <Text size={18} color={C.green} weight={800}>● GPS نشط</Text>
+          </div>
+        </div>
+
+        <div style={{
+          height: 570,
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: 24,
+          background: "linear-gradient(145deg,#173653,#10263C)",
+          border: "1px solid #65C8F533",
+        }}>
+          <div style={{
+            position: "absolute",
+            inset: -100,
+            opacity: 0.5,
+            transform: `translate(${(frame % 80) / 5}px, ${(frame % 100) / 7}px)`,
+            backgroundImage:
+              "linear-gradient(35deg, transparent 46%, #7896A733 47%, #7896A733 50%, transparent 51%), linear-gradient(125deg, transparent 43%, #7896A733 44%, #7896A733 48%, transparent 49%)",
+            backgroundSize: "145px 125px",
+          }} />
+
+          <svg
+            viewBox="0 0 600 570"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+          >
+            <path d="M-30 430 L130 350 L245 390 L365 230 L650 140"
+              fill="none" stroke="#7896A7" strokeWidth="34" opacity="0.18" />
+            <path d="M-30 430 L130 350 L245 390 L365 230 L650 140"
+              fill="none" stroke="#36D9F2" strokeWidth="7"
+              strokeLinecap="round" strokeDasharray="13 13" opacity="0.9" />
+            <path d="M-30 430 L130 350 L245 390 L365 230 L650 140"
+              fill="none" stroke="#FFFFFF" strokeWidth="2" opacity="0.3" />
+            <circle cx="130" cy="350" r="17" fill="#48D6A0" opacity="0.9" />
+            <circle cx="130" cy="350" r="29" fill="none" stroke="#48D6A0" strokeWidth="3" opacity={pulse} />
+            <circle cx="500" cy="185" r="17" fill="#F5C66B" />
+            <circle cx="500" cy="185" r="29" fill="none" stroke="#F5C66B" strokeWidth="3" opacity={pulse} />
+          </svg>
+
+          <div style={{
+            position: "absolute",
+            left: `${busX}%`,
+            top: `${65 - (busX - 12) * 0.55}%`,
+            transform: "translate(-50%,-50%)",
+            width: 100,
+            height: 76,
+            borderRadius: 22,
+            background: "linear-gradient(145deg,#FFE29A,#EFAF3E)",
+            border: "3px solid #FFF0C2",
+            boxShadow: "0 0 35px #F5C66B88",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 49,
+          }}>
+            🚌
+          </div>
+
+          <div style={{
+            position: "absolute",
+            top: 18,
+            right: 18,
+            background: "#071426DD",
+            border: "1px solid #FFFFFF22",
+            borderRadius: 16,
+            padding: "10px 16px",
+          }}>
+            <Text size={18} color={C.white}>حركة الباص</Text>
+            <Text size={16} color={C.cyan}>تحديث الموقع</Text>
+          </div>
+
+          <div style={{
+            position: "absolute",
+            bottom: 18,
+            left: 18,
+            background: "#071426DD",
+            borderRadius: 16,
+            padding: "10px 16px",
+          }}>
+            <Text size={18} color={C.green}>● موقع مباشر</Text>
+          </div>
+        </div>
+
+        <div style={{
+          display: "flex",
+          direction: "rtl",
+          gap: 12,
+          marginTop: 18,
+        }}>
+          <div style={{ flex: 1 }}>
+            <Text size={18} color={C.muted}>الخدمة</Text>
+            <Text size={22} weight={800}>تتبّع GPS</Text>
+          </div>
+          <div style={{ flex: 1 }}>
+            <Text size={18} color={C.muted}>المشاهدة</Text>
+            <Text size={22} weight={800}>خريطة متحركة</Text>
+          </div>
+        </div>
+      </Glass>
+
+      <Text size={23} color={C.cyan} style={{ textAlign: "center", marginTop: 25 }}>
+        اطمئن على الطريق... من هاتفك
+      </Text>
+    </Scene>
+  );
+};
+
 const Parents = ({ frame, fps }: { frame: number; fps: number }) => (
   <Scene frame={frame} fps={fps}>
     <Header
-      eyebrow="03 — تواصل ومتابعة"
+      eyebrow="04 — متابعة ولي الأمر"
       title="الأهل بالصورة"
       subtitle="متابعة أسهل واطمئنان أكبر"
     />
@@ -397,7 +535,7 @@ const Parents = ({ frame, fps }: { frame: number; fps: number }) => (
       <div style={{ fontSize: 60 }}>🚌</div>
       <div style={{ flex: 1 }}>
         <Text size={27} weight={900}>متابعة حركة الباص</Text>
-        <Text size={20} color={C.muted}>تحديثات الرحلة وإشعارات الوصول</Text>
+        <Text size={20} color={C.muted}>شاهد موقع الباص أثناء الرحلة</Text>
       </div>
       <Text size={20} color={C.green}>مباشر</Text>
     </Glass>
@@ -438,7 +576,7 @@ const Ending = ({ frame, fps }: { frame: number; fps: number }) => (
 export const MadrasatiAd: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const scene = Math.min(4, Math.floor(frame / 240));
+  const scene = Math.min(5, Math.floor(frame / 240));
   const local = frame - scene * 240;
 
   return (
@@ -447,14 +585,15 @@ export const MadrasatiAd: React.FC = () => {
       {scene === 0 && <Intro frame={local} fps={fps} />}
       {scene === 1 && <Dashboard frame={local} fps={fps} />}
       {scene === 2 && <Management frame={local} fps={fps} />}
-      {scene === 3 && <Parents frame={local} fps={fps} />}
-      {scene === 4 && <Ending frame={local} fps={fps} />}
+      {scene === 3 && <BusTracking frame={local} fps={fps} />}
+          {scene === 4 && <Parents frame={local} fps={fps} />}
+      {scene === 5 && <Ending frame={local} fps={fps} />}
       <div style={{
         position: "absolute", bottom: 42, left: 65, right: 65,
         height: 4, borderRadius: 10, background: "#FFFFFF20",
       }}>
         <div style={{
-          width: `${(frame / 1200) * 100}%`,
+          width: `${(frame / 1440) * 100}%`,
           height: "100%", borderRadius: 10,
           background: `linear-gradient(90deg, ${C.cyan}, ${C.blue})`,
         }} />
