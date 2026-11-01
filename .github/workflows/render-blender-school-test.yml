@@ -29,8 +29,8 @@ jobs:
         run: |
           echo '===== HDRI FILES ====='
           find assets -maxdepth 4 -type f -print
-          test -s assets/hdri/school_environment_4k.hdr
-          ls -lh assets/hdri/school_environment_4k.hdr
+          test -s assets/school_environment_4k.hdr
+          ls -lh assets/school_environment_4k.hdr
 
       - name: Install Blender
         run: |
@@ -42,7 +42,7 @@ jobs:
         working-directory: blender-school
         run: |
           mkdir -p output
-          blender --background --factory-startup --python scripts/build_school.py -- "$PWD/assets/hdri/school_environment_4k.hdr"
+          blender --background --factory-startup --python scripts/build_school.py -- "$PWD/assets/school_environment_4k.hdr"
           echo '===== RENDER OUTPUT ====='
           ls -lh output/
           test -s output/madrasati-school-test.png
