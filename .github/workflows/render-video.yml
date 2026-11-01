@@ -1,4 +1,4 @@
-name: Render Video
+name: Render Madrasati Ad
 
 'on':
   workflow_dispatch:
@@ -22,6 +22,12 @@ jobs:
           cache: npm
           cache-dependency-path: video-engine/package-lock.json
 
+      - name: Install Arabic fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core
+          fc-cache -f
+
       - name: Install dependencies
         working-directory: video-engine
         run: npm ci
@@ -30,14 +36,14 @@ jobs:
         working-directory: video-engine
         run: npx remotion browser ensure
 
-      - name: Render test video
+      - name: Render Madrasati Ad
         working-directory: video-engine
-        run: npx remotion render src/index.ts HelloWorld out/hello-world.mp4 --codec=h264 --concurrency=2
+        run: npx remotion render src/index.ts MadrasatiAd out/madrasati-ad.mp4 --codec=h264 --concurrency=2
 
       - name: Upload MP4
         uses: actions/upload-artifact@v4
         with:
-          name: hello-world-video
-          path: video-engine/out/hello-world.mp4
+          name: madrasati-ad
+          path: video-engine/out/madrasati-ad.mp4
           if-no-files-found: error
           retention-days: 7
