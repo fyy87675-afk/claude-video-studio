@@ -2,6 +2,9 @@ name: Render Madrasati 3D School Test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - cinematic-hybrid-v1
 
 permissions:
   contents: read
