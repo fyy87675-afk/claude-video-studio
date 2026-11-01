@@ -1,0 +1,52 @@
+name: Render Madrasati Cinematic Ad
+
+'on':
+  push:
+    branches:
+      - cinematic-hybrid-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: video-engine/package-lock.json
+
+      - name: Install Arabic fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core
+          fc-cache -f
+
+      - name: Install dependencies
+        working-directory: video-engine
+        run: npm ci
+
+      - name: Install Remotion browser
+        working-directory: video-engine
+        run: npx remotion browser ensure
+
+      - name: Render Cinematic Ad
+        working-directory: video-engine
+        run: npx remotion render src/index.ts MadrasatiCinematicAd out/madrasati-cinematic-ad.mp4 --codec=h264 --concurrency=2
+
+      - name: Upload MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-cinematic-ad
+          path: video-engine/out/madrasati-cinematic-ad.mp4
+          if-no-files-found: error
+          retention-days: 7
