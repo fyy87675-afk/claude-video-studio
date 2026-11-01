@@ -2,7 +2,6 @@ import React from "react";
 import {
   AbsoluteFill,
   Img,
-  OffthreadVideo,
   Sequence,
   interpolate,
   spring,
@@ -447,11 +446,42 @@ const Opening: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: C.bg }}>
-      <OffthreadVideo
-        src={staticFile("worldfilm/01-school.mp4")}
-        muted
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          overflow: "hidden",
+          background: "radial-gradient(ellipse at 50% 35%, #18385B 0%, #09182D 48%, #020711 100%)",
+        }}
+      >
+        <svg viewBox="0 0 1080 1920" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
+          <defs>
+            <linearGradient id="schoolWall" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#294C70" />
+              <stop offset="1" stopColor="#09182B" />
+            </linearGradient>
+            <linearGradient id="schoolGlass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#70DDF2" stopOpacity=".8" />
+              <stop offset="1" stopColor="#397DFF" stopOpacity=".12" />
+            </linearGradient>
+            <filter id="schoolGlow">
+              <feGaussianBlur stdDeviation="18" />
+            </filter>
+          </defs>
+          <circle cx="540" cy="700" r="330" fill="#397DFF" opacity=".12" filter="url(#schoolGlow)" />
+          <path d="M0 1250 L540 1000 L1080 1250 V1920 H0Z" fill="#071323" />
+          <path d="M120 790 L540 510 L960 790 V1450 H120Z" fill="url(#schoolWall)" stroke="#52799E" strokeOpacity=".55" strokeWidth="5" />
+          <path d="M80 800 L540 475 L1000 800" fill="none" stroke="#E6BD78" strokeWidth="12" opacity=".8" />
+          <rect x="430" y="570" width="220" height="105" rx="12" fill="#102C49" stroke="#E6BD78" strokeWidth="4" />
+          <text x="540" y="638" textAnchor="middle" fill="#F7FAFF" fontSize="42" fontWeight="bold">مدرستي</text>
+          <rect x="205" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="205" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="205" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" />
+          <rect x="465" y="1240" width="150" height="210" rx="70" fill="#071323" stroke="#E6BD78" strokeWidth="5" />
+          <path d="M0 1500 Q540 1390 1080 1500 V1920 H0Z" fill="#030914" />
+          <path d="M0 1630 Q540 1510 1080 1630" stroke="#5CE1F2" strokeOpacity=".4" strokeWidth="5" fill="none" />
+          <path d="M0 1770 Q540 1650 1080 1770" stroke="#E6BD78" strokeOpacity=".18" strokeWidth="3" fill="none" />
+        </svg>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#02071322 0%,#02071300 35%,#020713AA 100%)" }} />
+      </div>
       <AbsoluteFill
         style={{
           background:
@@ -577,11 +607,48 @@ const BusWorld: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ overflow: "hidden" }}>
-      <OffthreadVideo
-        src={staticFile("worldfilm/03-bus.mp4")}
-        muted
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          overflow: "hidden",
+          background: "radial-gradient(ellipse at 50% 35%, #173B59 0%, #08182C 52%, #020711 100%)",
+        }}
+      >
+        <svg viewBox="0 0 1080 1920" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
+          <defs>
+            <linearGradient id="busBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#F5C96F" />
+              <stop offset="1" stopColor="#C77A2D" />
+            </linearGradient>
+            <filter id="busGlow">
+              <feGaussianBlur stdDeviation="22" />
+            </filter>
+          </defs>
+          <circle cx="530" cy="1050" r="390" fill="#397DFF" opacity=".13" filter="url(#busGlow)" />
+          <path d="M-200 0 L80 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M-40 0 L240 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M120 0 L400 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M280 0 L560 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M440 0 L720 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M600 0 L880 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M760 0 L1040 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" /><path d="M920 0 L1200 950" stroke="#5CE1F2" strokeOpacity=".10" strokeWidth="3" />
+          <g opacity=".72"><rect x="-20" y="650" width="115" height="330" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="5" y="680" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="55" y="680" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="145" y="560" width="115" height="420" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="170" y="590" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="220" y="590" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="310" y="470" width="115" height="510" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="335" y="500" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="385" y="500" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="475" y="650" width="115" height="330" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="500" y="680" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="550" y="680" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="640" y="560" width="115" height="420" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="665" y="590" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="715" y="590" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="805" y="470" width="115" height="510" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="830" y="500" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="880" y="500" width="28" height="38" fill="#E6BD78" opacity=".35" /></g><g opacity=".72"><rect x="970" y="650" width="115" height="330" fill="#102943" stroke="#315577" strokeWidth="3" /><rect x="995" y="680" width="28" height="38" fill="#5CE1F2" opacity=".35" /><rect x="1045" y="680" width="28" height="38" fill="#E6BD78" opacity=".35" /></g>
+          <path d="M0 1170 Q540 1030 1080 1170 V1920 H0Z" fill="#050D19" />
+          <path d="M0 1430 Q540 1280 1080 1430" fill="none" stroke="#5CE1F2" strokeOpacity=".35" strokeWidth="6" />
+          <path d="M0 1590 Q540 1450 1080 1590" fill="none" stroke="#E6BD78" strokeOpacity=".2" strokeWidth="4" />
+          <path d="M470 1920 L525 1320 L555 1320 L650 1920" fill="#15263A" opacity=".8" />
+          <path d="M535 1800 L548 1640 M545 1530 L550 1430" stroke="#E6BD78" strokeWidth="9" strokeDasharray="45 35" opacity=".8" />
+          <g transform={`translate(${x},0)`}>
+            <ellipse cx="250" cy="1300" rx="220" ry="45" fill="#000" opacity=".55" />
+            <rect x="55" y="1035" width="390" height="230" rx="48" fill="url(#busBody)" stroke="#FFE0A0" strokeWidth="7" />
+            <path d="M85 1065 Q85 1050 110 1050 H400 Q420 1050 420 1075 V1155 H85Z" fill="#15334C" />
+            <rect x="110" y="1070" width="75" height="65" rx="9" fill="#70DDF2" opacity=".8" />
+            <rect x="200" y="1070" width="75" height="65" rx="9" fill="#70DDF2" opacity=".8" />
+            <rect x="290" y="1070" width="75" height="65" rx="9" fill="#70DDF2" opacity=".8" />
+            <rect x="390" y="1155" width="30" height="48" rx="8" fill="#FFF1B8" />
+            <rect x="70" y="1170" width="25" height="42" rx="8" fill="#F87171" />
+            <text x="250" y="1225" textAnchor="middle" fill="#14243A" fontSize="37" fontWeight="900">مدرستي</text>
+            <circle cx="145" cy="1270" r="42" fill="#101B2B" stroke="#8DA5BC" strokeWidth="9" />
+            <circle cx="360" cy="1270" r="42" fill="#101B2B" stroke="#8DA5BC" strokeWidth="9" />
+          </g>
+        </svg>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#02071355 0%,#02071300 35%,#020713CC 100%)" }} />
+      </div>
       <AbsoluteFill
         style={{
           background:
