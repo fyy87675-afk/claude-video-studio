@@ -4,6 +4,7 @@ import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
 import { MadrasatiAd } from "./MadrasatiAd";
 import { MadrasatiCinematicAd } from "./MadrasatiCinematicAd";
+import { MadrasatiWorldFilm } from "./MadrasatiWorldFilm";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -37,6 +38,15 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{ titleText: "Welcome to Remotion", titleColor: "#000000" }}
+      />
+
+      <Composition
+        id="MadrasatiWorldFilm"
+        component={MadrasatiWorldFilm}
+        durationInFrames={1350}
+        fps={30}
+        width={1080}
+        height={1920}
       />
 
       <Composition

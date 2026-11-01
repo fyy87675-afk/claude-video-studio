@@ -1,0 +1,73 @@
+name: Render Madrasati World Film
+
+on:
+  push:
+    branches:
+      - cinematic-hybrid-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: video-engine/package-lock.json
+
+      - name: Install Arabic fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core
+          fc-cache -f
+
+      - name: Download cinematic footage
+        run: |
+          mkdir -p video-engine/public/worldfilm
+
+          curl -fL --retry 4 -o video-engine/public/worldfilm/01-school.mp4 \
+            "https://videos.pexels.com/video-files/8499697/8499697-hd_1920_1080_30fps.mp4"
+
+          curl -fL --retry 4 -o video-engine/public/worldfilm/02-classroom.mp4 \
+            "https://videos.pexels.com/video-files/5897655/5897655-uhd_2160_3840_24fps.mp4"
+
+          curl -fL --retry 4 -o video-engine/public/worldfilm/03-bus.mp4 \
+            "https://videos.pexels.com/video-files/37692138/15981502_2160_3840_24fps.mp4"
+
+          curl -fL --retry 4 -o video-engine/public/worldfilm/04-family.mp4 \
+            "https://videos.pexels.com/video-files/7407132/7407132-uhd_3840_2160_25fps.mp4"
+
+          echo "===== FOOTAGE SIZES ====="
+          ls -lh video-engine/public/worldfilm/
+
+      - name: Install dependencies
+        working-directory: video-engine
+        run: npm ci
+
+      - name: Install Remotion browser
+        working-directory: video-engine
+        run: npx remotion browser ensure
+
+      - name: Render World Film
+        working-directory: video-engine
+        run: |
+          npx remotion render src/index.ts MadrasatiWorldFilm out/madrasati-world-film.mp4 \
+            --codec=h264 --concurrency=2
+
+      - name: Upload MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-world-film
+          path: video-engine/out/madrasati-world-film.mp4
+          if-no-files-found: error
+          retention-days: 7
