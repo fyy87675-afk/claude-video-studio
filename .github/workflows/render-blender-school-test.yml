@@ -1,0 +1,59 @@
+name: Render Madrasati Realistic School Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  render-school:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout cinematic branch
+        uses: actions/checkout@v4
+
+      - name: Download prepared real-world HDRI
+        uses: actions/download-artifact@v4
+        with:
+          name: madrasati-blender-hdri-assets
+          path: blender-school/assets
+          repository: ${{ github.repository }}
+          run-id: 41362550426
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify HDRI
+        working-directory: blender-school
+        run: |
+          echo '===== HDRI FILES ====='
+          find assets -maxdepth 4 -type f -print
+          test -s assets/hdri/school_environment_4k.hdr
+          ls -lh assets/hdri/school_environment_4k.hdr
+
+      - name: Install Blender
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender
+          blender --version
+
+      - name: Render school scene
+        working-directory: blender-school
+        run: |
+          mkdir -p output
+          blender --background --factory-startup --python scripts/build_school.py -- "$PWD/assets/hdri/school_environment_4k.hdr"
+          echo '===== RENDER OUTPUT ====='
+          ls -lh output/
+          test -s output/madrasati-school-test.png
+          test -s output/madrasati-school.blend
+
+      - name: Upload rendered school
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-blender-school-test
+          path: |
+            blender-school/output/madrasati-school-test.png
+            blender-school/output/madrasati-school.blend
+          if-no-files-found: error
+          retention-days: 7
