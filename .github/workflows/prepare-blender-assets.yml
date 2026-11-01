@@ -1,0 +1,69 @@
+name: Prepare Blender Photorealistic Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - cinematic-hybrid-v1
+    paths:
+      - .github/workflows/prepare-blender-assets.yml
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Blender and tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender python3
+          blender --version
+
+      - name: Download real-world HDRI from Poly Haven
+        run: |
+          mkdir -p assets/hdri
+          python3 - <<'PYTHON'
+          import json
+          import urllib.request
+
+          asset = "kloppenheim_06_puresky"
+          api = f"https://api.polyhaven.com/files/{asset}"
+          request = urllib.request.Request(
+              api,
+              headers={"User-Agent": "Madrasati-Visual-Pipeline/1.0"}
+          )
+
+          with urllib.request.urlopen(request, timeout=60) as response:
+              data = json.load(response)
+
+          options = data["hdri"]["4k"]
+          entry = options.get("hdr") or options.get("exr")
+
+          if not entry or "url" not in entry:
+              raise RuntimeError("4K HDRI download URL not found")
+
+          extension = "hdr" if "hdr" in options else "exr"
+          destination = f"assets/hdri/school_environment_4k.{extension}"
+          print("Downloading:", entry["url"])
+          urllib.request.urlretrieve(entry["url"], destination)
+          print("Saved:", destination)
+          PYTHON
+          ls -lh assets/hdri
+
+      - name: Verify Blender Cycles
+        run: |
+          blender -b --python-expr "import bpy; bpy.context.scene.render.engine = 'CYCLES'; print('BLENDER VERSION:', bpy.app.version_string); print('RENDER ENGINE:', bpy.context.scene.render.engine); print('CYCLES READY: YES')"
+
+      - name: Save environment assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-blender-hdri-assets
+          path: assets/hdri/
+          if-no-files-found: error
+          retention-days: 7
