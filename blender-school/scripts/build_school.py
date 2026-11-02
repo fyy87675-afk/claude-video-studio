@@ -1,6 +1,7 @@
 import bpy
 import math
 import sys
+import os
 from mathutils import Vector
 
 # =====================================================
@@ -307,13 +308,15 @@ scene.render.resolution_percentage = 100
 
 scene.render.image_settings.file_format = "PNG"
 scene.render.image_settings.color_mode = "RGBA"
-scene.render.filepath = "//output/madrasati-school-test.png"
+output_dir = os.path.join(os.getcwd(), "output")
+os.makedirs(output_dir, exist_ok=True)
+scene.render.filepath = os.path.join(output_dir, "madrasati-school-test.png")
 
 scene.view_settings.view_transform = "AgX"
 scene.render.film_transparent = False
 
 # Save project and render
-bpy.ops.wm.save_as_mainfile(filepath="//output/madrasati-school.blend")
+bpy.ops.wm.save_as_mainfile(filepath=os.path.join(output_dir, "madrasati-school.blend"))
 bpy.ops.render.render(write_still=True)
 
 print("MADRASATI BLENDER SCENE COMPLETE")
