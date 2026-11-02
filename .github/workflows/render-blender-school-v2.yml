@@ -1,0 +1,59 @@
+name: Render Madrasati Photorealistic School V2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  render-school-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout cinematic branch
+        uses: actions/checkout@v4
+
+      - name: Download prepared HDRI
+        uses: actions/download-artifact@v4
+        with:
+          name: madrasati-blender-hdri-assets
+          path: blender-school/assets
+          repository: ${{ github.repository }}
+          run-id: 41362550426
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify HDRI
+        working-directory: blender-school
+        run: |
+          test -s assets/school_environment_4k.hdr
+          ls -lh assets/school_environment_4k.hdr
+
+      - name: Install Blender
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender
+          blender --version
+
+      - name: Render V2 school scene
+        working-directory: blender-school
+        run: |
+          mkdir -p output
+          blender --background --factory-startup \
+            --python scripts/build_school_v2.py \
+            -- "$PWD/assets/school_environment_4k.hdr"
+          test -s output/madrasati-school-test.png
+          test -s output/madrasati-school.blend
+          ls -lh output/
+
+      - name: Upload V2 preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-blender-school-v2
+          path: |
+            blender-school/output/madrasati-school-test.png
+            blender-school/output/madrasati-school.blend
+          if-no-files-found: error
+          retention-days: 7
