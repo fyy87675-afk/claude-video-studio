@@ -1,0 +1,64 @@
+name: Render Madrasati Cinematic School
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  render-cinematic-school:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout cinematic branch
+        uses: actions/checkout@v4
+
+      - name: Download prepared HDRI
+        uses: actions/download-artifact@v4
+        with:
+          name: madrasati-blender-hdri-assets
+          path: blender-school/assets
+          repository: ${{ github.repository }}
+          run-id: 41362550426
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify HDRI
+        working-directory: blender-school
+        run: |
+          test -s assets/school_environment_4k.hdr
+          ls -lh assets/school_environment_4k.hdr
+
+      - name: Install Blender and FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender ffmpeg
+          blender --version
+          ffmpeg -version
+
+      - name: Render cinematic school animation
+        working-directory: blender-school
+        run: |
+          mkdir -p output
+          blender --background --factory-startup \
+            --python scripts/build_school_cinematic.py \
+            -- "$PWD/assets/school_environment_4k.hdr"
+
+          test -s output/madrasati-school-cinematic-v1.mp4
+
+          ffprobe -v error \
+            -show_entries format=duration,size \
+            -of default=noprint_wrappers=1 \
+            output/madrasati-school-cinematic-v1.mp4
+
+          ls -lh output/
+
+      - name: Upload cinematic preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-school-cinematic-v1
+          path: blender-school/output/madrasati-school-cinematic-v1.mp4
+          if-no-files-found: error
+          retention-days: 7
