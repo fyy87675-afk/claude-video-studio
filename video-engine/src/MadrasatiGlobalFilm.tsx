@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Img,
   Sequence,
   interpolate,
@@ -897,6 +898,17 @@ const BrandEnding: React.FC = () => {
 
 export const MadrasatiGlobalFilm: React.FC = () => (
   <AbsoluteFill style={{ background: C.bg }}>
+    <Audio
+      src={staticFile("audio/madrasati-cinematic.mp3")}
+      volume={(frame) =>
+        interpolate(
+          frame,
+          [0, 45, 1710, 1800],
+          [0, 0.65, 0.65, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+        )
+      }
+    />
     <Sequence from={0} durationInFrames={150}>
       <Opening />
     </Sequence>
