@@ -425,19 +425,22 @@ for obj in (camera, camera.data):
 
 # ---------------- CINEMATIC VIDEO SETTINGS ----------------
 scene = bpy.context.scene
-scene.render.engine = "CYCLES"
-scene.cycles.samples = 24
-scene.cycles.use_denoising = False
-scene.cycles.max_bounces = 8
-scene.cycles.diffuse_bounces = 3
-scene.cycles.glossy_bounces = 4
+# Fast cinematic rendering: Eevee / Eevee Next
+if bpy.app.version >= (4, 2, 0):
+    scene.render.engine = "BLENDER_EEVEE_NEXT"
+else:
+    scene.render.engine = "BLENDER_EEVEE"
+
+if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
+    scene.eevee.taa_render_samples = 32
 
 scene.render.resolution_x = 1080
 scene.render.resolution_y = 1350
-scene.render.resolution_percentage = 100
+scene.render.resolution_percentage = 80
 
 scene.frame_start = 1
 scene.frame_end = 120
+scene.frame_step = 59  # Temporary 3-frame quality test
 scene.render.fps = 24
 
 scene.render.image_settings.file_format = "FFMPEG"
