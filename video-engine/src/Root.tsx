@@ -6,6 +6,7 @@ import { MadrasatiAd } from "./MadrasatiAd";
 import { MadrasatiCinematicAd } from "./MadrasatiCinematicAd";
 import { MadrasatiWorldFilm } from "./MadrasatiWorldFilm";
 import { MadrasatiGlobalFilm } from "./MadrasatiGlobalFilm";
+import { MadrasatiMasterFilm } from "./MadrasatiMasterFilm";
 import { RealisticSchool3D } from "./RealisticSchool3D";
 
 export const RemotionRoot: React.FC = () => {
@@ -82,6 +83,15 @@ export const RemotionRoot: React.FC = () => {
         id="MadrasatiAd"
         component={MadrasatiAd}
         durationInFrames={1440}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
+      <Composition
+        id="MadrasatiMasterFilm"
+        component={MadrasatiMasterFilm}
+        durationInFrames={2360}
         fps={30}
         width={1080}
         height={1920}

@@ -1,0 +1,67 @@
+name: Render Madrasati Master Film
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: video-engine/package-lock.json
+
+      - name: Install fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-core fonts-noto-extra ffmpeg
+
+      - name: Install dependencies
+        working-directory: video-engine
+        run: npm ci
+
+      - name: Ensure Remotion browser
+        working-directory: video-engine
+        run: npx remotion browser ensure
+
+      - name: TypeScript check
+        working-directory: video-engine
+        run: npx tsc --noEmit
+
+      - name: Render Master Film
+        working-directory: video-engine
+        run: |
+          mkdir -p out
+          npx remotion render src/index.ts MadrasatiMasterFilm \
+            out/madrasati-master-film.mp4 \
+            --codec=h264 \
+            --concurrency=2
+
+      - name: Validate rendered video
+        working-directory: video-engine
+        run: |
+          test -s out/madrasati-master-film.mp4
+          ffprobe -v error \
+            -show_entries format=duration \
+            -of default=noprint_wrappers=1 \
+            out/madrasati-master-film.mp4
+          ffmpeg -v error -i out/madrasati-master-film.mp4 -f null -
+
+      - name: Upload final film
+        uses: actions/upload-artifact@v4
+        with:
+          name: madrasati-master-film
+          path: video-engine/out/madrasati-master-film.mp4
+          if-no-files-found: error
+          retention-days: 14
