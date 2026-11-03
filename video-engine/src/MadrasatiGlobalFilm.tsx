@@ -889,7 +889,7 @@ export const MadrasatiGlobalFilm: React.FC = () => (
       volume={(frame) =>
         interpolate(
           frame,
-          [0, 45, 1710, 1800],
+          [0, 45, 1020, 1110],
           [0, 0.65, 0.65, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
         )
@@ -898,16 +898,16 @@ export const MadrasatiGlobalFilm: React.FC = () => (
     <Sequence durationInFrames={150}>
       <Opening />
     </Sequence>
-    <Sequence from={150} durationInFrames={900}>
+    <Sequence from={150} durationInFrames={210}>
       <AdminWorld />
     </Sequence>
-    <Sequence from={1050} durationInFrames={300}>
+    <Sequence from={360} durationInFrames={300}>
       <BusWorld />
     </Sequence>
-    <Sequence from={1350} durationInFrames={180}>
+    <Sequence from={660} durationInFrames={180}>
       <ParentWorld />
     </Sequence>
-    <Sequence from={1530} durationInFrames={270}>
+    <Sequence from={840} durationInFrames={270}>
       <BrandEnding />
     </Sequence>
   </AbsoluteFill>
