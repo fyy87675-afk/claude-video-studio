@@ -440,7 +440,7 @@ scene.render.resolution_percentage = 80
 
 scene.frame_start = 1
 scene.frame_end = 120
-scene.frame_step = 59  # Temporary 3-frame quality test
+scene.frame_step = 1  # Temporary 3-frame quality test
 scene.render.fps = 24
 
 scene.render.image_settings.file_format = "FFMPEG"
