@@ -298,15 +298,15 @@ export const MadrasatiMasterFilm: React.FC = () => {
         />
       </Sequence>
 
-      <Sequence from={1572} durationInFrames={348}>
-        <Shot durationInFrames={348}
+      <Sequence from={1572} durationInFrames={327}>
+        <Shot durationInFrames={327}
           src="stock-footage/madrasati/school_bus.mp4"
           title="اطمئنان يمتد إلى الطريق"
           subtitle="متابعة الحافلات المدرسية عبر نظام تحديد المواقع GPS"
         />
       </Sequence>
 
-      <Sequence from={1902} durationInFrames={198}>
+      <Sequence from={1881} durationInFrames={198}>
         <Shot durationInFrames={198}
           src="stock-footage/madrasati/classroom_4k.mp4"
           title="كل الإمكانيات"
@@ -314,7 +314,7 @@ export const MadrasatiMasterFilm: React.FC = () => {
         />
       </Sequence>
 
-      <Sequence from={2082} durationInFrames={278}>
+      <Sequence from={2061} durationInFrames={299}>
         <BrandEnding />
       </Sequence>
     </AbsoluteFill>
