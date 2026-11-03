@@ -587,7 +587,7 @@ const BrandEnding: React.FC = () => {
 
 export const MadrasatiWorldFilm: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: C.navy }}>
-    <Sequence from={0} durationInFrames={270}>
+    <Sequence durationInFrames={270}>
       <Opening />
     </Sequence>
     <Sequence from={270} durationInFrames={270}>

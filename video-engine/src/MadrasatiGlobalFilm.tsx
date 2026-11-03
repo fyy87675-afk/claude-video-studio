@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Audio,
   Img,
+  OffthreadVideo,
   Sequence,
   interpolate,
   spring,
@@ -455,32 +456,17 @@ const Opening: React.FC = () => {
           background: "radial-gradient(ellipse at 50% 35%, #18385B 0%, #09182D 48%, #020711 100%)",
         }}
       >
-        <svg viewBox="0 0 1080 1920" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
-          <defs>
-            <linearGradient id="schoolWall" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#294C70" />
-              <stop offset="1" stopColor="#09182B" />
-            </linearGradient>
-            <linearGradient id="schoolGlass" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#70DDF2" stopOpacity=".8" />
-              <stop offset="1" stopColor="#397DFF" stopOpacity=".12" />
-            </linearGradient>
-            <filter id="schoolGlow">
-              <feGaussianBlur stdDeviation="18" />
-            </filter>
-          </defs>
-          <circle cx="540" cy="700" r="330" fill="#397DFF" opacity=".12" filter="url(#schoolGlow)" />
-          <path d="M0 1250 L540 1000 L1080 1250 V1920 H0Z" fill="#071323" />
-          <path d="M120 790 L540 510 L960 790 V1450 H120Z" fill="url(#schoolWall)" stroke="#52799E" strokeOpacity=".55" strokeWidth="5" />
-          <path d="M80 800 L540 475 L1000 800" fill="none" stroke="#E6BD78" strokeWidth="12" opacity=".8" />
-          <rect x="430" y="570" width="220" height="105" rx="12" fill="#102C49" stroke="#E6BD78" strokeWidth="4" />
-          <text x="540" y="638" textAnchor="middle" fill="#F7FAFF" fontSize="42" fontWeight="bold">مدرستي</text>
-          <rect x="205" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="835" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="205" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="1010" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="205" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="380" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="555" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" /><rect x="730" y="1185" width="105" height="112" rx="8" fill="url(#schoolGlass)" stroke="#75CFE8" strokeOpacity=".5" strokeWidth="3" />
-          <rect x="465" y="1240" width="150" height="210" rx="70" fill="#071323" stroke="#E6BD78" strokeWidth="5" />
-          <path d="M0 1500 Q540 1390 1080 1500 V1920 H0Z" fill="#030914" />
-          <path d="M0 1630 Q540 1510 1080 1630" stroke="#5CE1F2" strokeOpacity=".4" strokeWidth="5" fill="none" />
-          <path d="M0 1770 Q540 1650 1080 1770" stroke="#E6BD78" strokeOpacity=".18" strokeWidth="3" fill="none" />
-        </svg>
+        <OffthreadVideo
+          src={staticFile("school/madrasati-school-cinematic-v1.mp4")}
+          muted
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#02071322 0%,#02071300 35%,#020713AA 100%)" }} />
       </div>
       <AbsoluteFill
@@ -909,7 +895,7 @@ export const MadrasatiGlobalFilm: React.FC = () => (
         )
       }
     />
-    <Sequence from={0} durationInFrames={150}>
+    <Sequence durationInFrames={150}>
       <Opening />
     </Sequence>
     <Sequence from={150} durationInFrames={900}>
